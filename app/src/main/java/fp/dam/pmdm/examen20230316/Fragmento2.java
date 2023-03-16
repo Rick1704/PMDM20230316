@@ -58,7 +58,6 @@ public class Fragmento2 extends Fragment implements LocationListener {
         consulta2.setOnClickListener(this::consulta2);
         gps.setOnClickListener(this::consultagps);
 
-
         return v;
     }
 
@@ -66,18 +65,6 @@ public class Fragmento2 extends Fragment implements LocationListener {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference name = database.getReference("ClassicModelsV2/customers/103/customerName");
         Datos datos = new Datos();
-
-        name.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                //textView.setText(snapshot.getValue().toString());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
         List<Datos> da = Arrays.asList(new Datos(name.toString(),0));
         AdaptadorLista li = new AdaptadorLista(getContext(),R.layout.contenidolist,da);
 

@@ -31,24 +31,6 @@ public class Fragmento1 extends Fragment implements SurfaceHolder.Callback {
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
-        if (currentApiVersion >= Build.VERSION_CODES.KITKAT) {
-            getWindow().getDecorView().setSystemUiVisibility(flags);
-            final View decorView = getWindow().getDecorView();
-            decorView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
-                @Override
-                public void onSystemUiVisibilityChange(int visibility) {
-                    if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0)
-                        decorView.setSystemUiVisibility(flags);
-                }
-            });
-
-            SurfaceView surface = new SurfaceView(getContext());
-
-            surface.getHolder().addCallback(this);
-            setContentView(surface);
-            juego = new Juego();
-            surface.setOnTouchListener(juego);
-        }
 
 
         return v;
