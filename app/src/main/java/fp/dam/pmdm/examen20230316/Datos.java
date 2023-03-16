@@ -9,6 +9,10 @@ public class Datos {
         this.importe = importe;
     }
 
+    public Datos() {
+
+    }
+
     public String getNombreCustomer() {
         return nombreCustomer;
     }
