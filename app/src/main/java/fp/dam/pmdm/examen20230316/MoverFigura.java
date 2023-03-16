@@ -1,7 +1,18 @@
 package fp.dam.pmdm.examen20230316;
 
+import android.graphics.Paint;
+import android.view.SurfaceHolder;
+
 public class MoverFigura implements Runnable{
 
+    private SurfaceHolder holder;
+    private float width;
+    private float height;
+    private volatile boolean fin;
+    private float vAngular = 35;
+    private float angulo = 0;
+    private float px;
+    private float py;
     static float FPS = 60;
     static float NPF = 1000000000F / FPS;
 

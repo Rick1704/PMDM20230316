@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.ListFragment;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -35,9 +36,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
-public class Fragmento2 extends Fragment implements LocationListener {
-     private Button consulta1;
-     private Button consulta2;
+public class Fragmento2 extends ListFragment implements LocationListener {
+    private Button consulta1;
+    private Button consulta2;
     private Button gps;
 
     private LocationManager manager;
@@ -65,9 +66,9 @@ public class Fragmento2 extends Fragment implements LocationListener {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference name = database.getReference("ClassicModelsV2/customers/103/customerName");
         Datos datos = new Datos();
-        List<Datos> da = Arrays.asList(new Datos(name.toString(),0));
-        AdaptadorLista li = new AdaptadorLista(getContext(),R.layout.contenidolist,da);
-
+        List<Datos> da = Arrays.asList(new Datos(name.toString(), 0));
+        AdaptadorLista li = new AdaptadorLista(getContext(), R.layout.contenidolist, da);
+        setListAdapter(li);
     }
 
     public void consulta2(View v) {
@@ -85,13 +86,12 @@ public class Fragmento2 extends Fragment implements LocationListener {
     }
 
 
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 1)
             if (grantResults.length != 2 || grantResults[0] != PackageManager.PERMISSION_GRANTED || grantResults[1] != PackageManager.PERMISSION_GRANTED) {
-                //coordenadas.setText("Sin permiso para usar el GPS");
+
             } else checkProvider();
     }
 
@@ -102,13 +102,9 @@ public class Fragmento2 extends Fragment implements LocationListener {
                 Intent i = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                 startActivityForResult(i, 2);
             }).setNegativeButton("Cancelar", (iface, id) -> {
-               // coordenadas.setText("Ubicación deshabilitada");
             }).show();
         }
     }
-
-
-
 
 
     @Override
@@ -124,7 +120,6 @@ public class Fragmento2 extends Fragment implements LocationListener {
     private void iniciarListener() {
         Location location = manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         if (location != null) onLocationChanged(location);
-        //else coordenadas.setText("Esperando coordenadas");
         manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 5, this);
     }
 
@@ -151,10 +146,7 @@ public class Fragmento2 extends Fragment implements LocationListener {
             if (addresses == null || addresses.isEmpty())
                 Toast.makeText(getContext(), "Error obteniendo dirección: ", Toast.LENGTH_LONG).show();
             else {
-               // direcciones.setText("Direcciones (");
-               // direcciones.append(String.valueOf(addresses.size()));
-               // direcciones.append(")");
-               // adapter.actualizar(addresses);
+
             }
         }
     }
