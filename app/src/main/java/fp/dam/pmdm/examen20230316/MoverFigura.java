@@ -3,7 +3,7 @@ package fp.dam.pmdm.examen20230316;
 import android.graphics.Paint;
 import android.view.SurfaceHolder;
 
-public class MoverFigura implements Runnable{
+public class MoverFigura implements Runnable {
 
     private SurfaceHolder holder;
     private float width;
@@ -38,6 +38,6 @@ public class MoverFigura implements Runnable{
 
 
     private void siguiente(float lapso) {
-
+        angulo += ((lapso * vAngular) / 1000000000f);
     }
 }
