@@ -123,11 +123,7 @@ public class Fragmento2 extends ListFragment implements LocationListener {
         manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 5, this);
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        manager.removeUpdates(this);
-    }
+
 
     private class GeocoderTask extends AsyncTask<Double, Void, List<Address>> {
         @Override
