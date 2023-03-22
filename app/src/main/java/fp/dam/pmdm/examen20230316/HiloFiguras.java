@@ -63,7 +63,7 @@ public class HiloFiguras implements Runnable {
     // Métodos auxiliares
     private void siguiente(float lapso) {
         pelota.mover(lapso);
-        poligono.mover(lapso, 150* lapso / 1000000000f);
+        poligono.mover(lapso, 250* lapso / 1000000000f);
         }
 
         private void pintar (Canvas canvas){

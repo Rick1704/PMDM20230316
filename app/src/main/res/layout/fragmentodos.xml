@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/consulta1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="56dp"
@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/gps"
         android:layout_width="132dp"
         android:layout_height="53dp"
         android:layout_marginStart="162dp"
@@ -25,10 +25,10 @@
         android:text="GPS"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button1" />
+        app:layout_constraintTop_toBottomOf="@+id/consulta1" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/consulta2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
@@ -38,7 +38,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
-        android:id="@+id/listView"
+        android:id="@+id/list"
         android:layout_width="340dp"
         android:layout_height="352dp"
         android:layout_marginStart="18dp"
