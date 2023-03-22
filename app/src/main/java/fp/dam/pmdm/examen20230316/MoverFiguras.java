@@ -17,12 +17,13 @@ class MoverFiguras extends SurfaceView implements SurfaceHolder.Callback{
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        hiloFiguras = new HiloFiguras(holder, getWidth(), getHeight());
-        hiloFiguras.iniciar();
+
     }
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+        hiloFiguras = new HiloFiguras(holder, getWidth(), getHeight());
+        hiloFiguras.iniciar();
     }
 
     @Override
