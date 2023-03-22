@@ -1,17 +1,16 @@
 package fp.dam.pmdm.examen20230316;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -19,7 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnTouchListener {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     private FragmentManager fragmentManager;
@@ -27,9 +26,9 @@ public class MainActivity extends AppCompatActivity {
     private Fragment currentFragment;
     private Fragment fragmentOne;
     private Fragment fragmentTwo;
-    private Button button;
     private float initialTouchY;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,8 +49,7 @@ public class MainActivity extends AppCompatActivity {
         });
         fragmentContainer = findViewById(R.id.fragment_container);
 
-        // Obtiene una referencia al botón
-        button = findViewById(R.id.button);
+
 
         // Obtiene una instancia del FragmentManager
         fragmentManager = getSupportFragmentManager();
@@ -65,46 +63,38 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager.beginTransaction().replace(R.id.fragment_container, currentFragment).commit();
 
         // Configura el OnClickListener del botón
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (currentFragment == fragmentOne) {
-                    currentFragment = fragmentTwo;
-                } else {
-                    currentFragment = fragmentOne;
-                }
-                fragmentManager.beginTransaction().replace(R.id.fragment_container, currentFragment).commit();
-            }
-        });
 
-        fragmentContainer.setOnTouchListener((v, event) -> {
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    // Guarda la posición vertical inicial del toque
-                    initialTouchY = event.getY();
-                    break;
-                case MotionEvent.ACTION_MOVE:
-                    float currentTouchY = event.getY();
-                    if (currentTouchY > initialTouchY) {
-                        // El usuario ha desplazado el dedo hacia abajo
-                        if (currentFragment != fragmentOne) {
-                            // Cambia al Fragment anterior
-                            currentFragment = fragmentOne;
-                            fragmentManager.beginTransaction().replace(R.id.fragment_container, currentFragment).commit();
-                        }
-                    } else if (currentTouchY < initialTouchY) {
-                        // El usuario ha desplazado el dedo hacia arriba
-                        if (currentFragment != fragmentTwo) {
-                            // Cambia al siguiente Fragment
-                            currentFragment = fragmentTwo;
-                            fragmentManager.beginTransaction().replace(R.id.fragment_container, currentFragment).commit();
-                        }
-                    }
-                    break;
-            }
-            return true;
-        });
+
+        fragmentContainer.setOnTouchListener(this::onTouch);
     }
 
 
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        switch (motionEvent.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                // Guarda la posición vertical inicial del toque
+                initialTouchY = motionEvent.getY();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                float currentTouchY = motionEvent.getY();
+                if (currentTouchY > initialTouchY) {
+                    // El usuario ha desplazado el dedo hacia abajo
+                    if (currentFragment != fragmentOne) {
+                        // Cambia al Fragment anterior
+                        currentFragment = fragmentOne;
+                        fragmentManager.beginTransaction().replace(R.id.fragment_container, currentFragment).commit();
+                    }
+                } else if (currentTouchY < initialTouchY) {
+                    // El usuario ha desplazado el dedo hacia arriba
+                    if (currentFragment != fragmentTwo) {
+                        // Cambia al siguiente Fragment
+                        currentFragment = fragmentTwo;
+                        fragmentManager.beginTransaction().replace(R.id.fragment_container, currentFragment).commit();
+                    }
+                }
+                break;
+        }
+        return true;
+    }
 }
