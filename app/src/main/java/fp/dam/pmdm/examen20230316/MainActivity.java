@@ -22,7 +22,6 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     private FragmentManager manager;
-    private FrameLayout ContenedorFragment;
     private Fragment FragmentoActual, PrimerFragmento, SegundoFragment;
     private float posicionY;
 
@@ -45,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
             }
         });
-        ContenedorFragment = findViewById(R.id.fragment_container);
+        FrameLayout contenedorFragment = findViewById(R.id.fragment_container);
 
         PrimerFragmento = new PrimerFragment();
         SegundoFragment = new SegundoFragment();
@@ -53,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         manager = getSupportFragmentManager();
         manager.beginTransaction().replace(R.id.fragment_container, FragmentoActual).commit();
 
-        ContenedorFragment.setOnTouchListener(this::onTouch);
+        contenedorFragment.setOnTouchListener(this::onTouch);
     }
 
 

@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 
 
 class MoverFiguras extends SurfaceView implements SurfaceHolder.Callback{
-    private HiloFiguras hiloFiguras;
 
     public MoverFiguras(Context context) {
         super(context);
@@ -22,7 +21,7 @@ class MoverFiguras extends SurfaceView implements SurfaceHolder.Callback{
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-        hiloFiguras = new HiloFiguras(holder, getWidth(), getHeight());
+        HiloFiguras hiloFiguras = new HiloFiguras(holder, getWidth(), getHeight());
         hiloFiguras.iniciar();
     }
 

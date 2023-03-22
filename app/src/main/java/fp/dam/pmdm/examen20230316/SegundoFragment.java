@@ -35,9 +35,6 @@ import java.util.List;
 import java.util.Locale;
 
 public class SegundoFragment extends ListFragment implements LocationListener {
-    private Button consulta1;
-    private Button consulta2;
-    private Button gps;
 
     private LocationManager manager;
     private Geocoder geocoder;
@@ -47,9 +44,9 @@ public class SegundoFragment extends ListFragment implements LocationListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragmentodos, container, false);
-        consulta1 = (Button) v.findViewById(R.id.consulta1);
-        consulta2 = (Button) v.findViewById(R.id.consulta2);
-        gps = (Button) v.findViewById(R.id.gps);
+        Button consulta1 = (Button) v.findViewById(R.id.consulta1);
+        Button consulta2 = (Button) v.findViewById(R.id.consulta2);
+        Button gps = (Button) v.findViewById(R.id.gps);
 
 
         consulta1.setOnClickListener(this::consulta1);
