@@ -37,7 +37,7 @@ public class HiloFiguras implements Runnable {
     public void iniciar() {
         gameLoop = new Thread(this);
         poligono = new PoligonoRegular(width / 2f,(height / 2f)-300, 5, 300, Color.BLACK, 200,this);
-        pelota = new Pelota(width / 2f,(height / 2f)-300,300,100,-23,Color.BLACK,this);
+        pelota = new Pelota(width / 2f,(height / 2f)-300,300,200,0,Color.BLACK,this);
         gameLoop.start();
     }
 
@@ -70,7 +70,7 @@ public class HiloFiguras implements Runnable {
             canvas.drawColor(Color.BLUE);
             Paint paint2 = new Paint();
             paint2.setStyle(Paint.Style.STROKE);
-            paint2.setStrokeWidth(10);
+            paint2.setStrokeWidth(6);
             paint2.setColor(Color.WHITE);
             canvas.drawLine(0, PosicionY, width, PosicionY, paint2);
             pelota.paint(canvas);

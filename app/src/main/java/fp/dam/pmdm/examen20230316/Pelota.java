@@ -1,6 +1,7 @@
 package fp.dam.pmdm.examen20230316;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 
 public class Pelota {
@@ -20,8 +21,9 @@ public class Pelota {
         vy = v * (float) Math.sin(dir);
         this.juego = juego;
         paint = new Paint();
-        paint.setColor(color);
-        paint.setStyle(Paint.Style.FILL);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(5);
+        paint.setColor(Color.BLACK);
     }
 
     public void mover(float lapso) {
