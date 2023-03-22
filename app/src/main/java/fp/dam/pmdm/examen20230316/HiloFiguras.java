@@ -36,8 +36,8 @@ public class HiloFiguras implements Runnable {
     // Método que inicia el hilo
     public void iniciar() {
         gameLoop = new Thread(this);
-        poligono = new PoligonoRegular(width / 2f,(height / 2f)-300, 5, 300, Color.BLACK, 200,this);
-        pelota = new Pelota(width / 2f,(height / 2f)-300,300,200,0,Color.BLACK,this);
+        poligono = new PoligonoRegular(width / 2f,(height / 2f)-300, 5, 300, Color.BLACK, 173,this);
+        pelota = new Pelota(width / 2f,(height / 2f)-300,300,173,0,Color.BLACK,this);
         gameLoop.start();
     }
 
@@ -63,15 +63,15 @@ public class HiloFiguras implements Runnable {
     // Métodos auxiliares
     private void siguiente(float lapso) {
         pelota.mover(lapso);
-        poligono.mover(lapso);
+        poligono.mover(lapso, 150* lapso / 1000000000f);
         }
 
         private void pintar (Canvas canvas){
-            canvas.drawColor(Color.BLUE);
+            canvas.drawColor(Color.WHITE);
             Paint paint2 = new Paint();
             paint2.setStyle(Paint.Style.STROKE);
             paint2.setStrokeWidth(6);
-            paint2.setColor(Color.WHITE);
+            paint2.setColor(Color.BLUE);
             canvas.drawLine(0, PosicionY, width, PosicionY, paint2);
             pelota.paint(canvas);
             poligono.dibujar(canvas);

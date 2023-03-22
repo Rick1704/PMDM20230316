@@ -14,6 +14,7 @@ public class PoligonoRegular {
     private float vx;
     private HiloFiguras hiloFiguras;
     private Paint paint;
+    private float angulo = 0; // Agregamos una variable para almacenar el ángulo actual
 
     public PoligonoRegular(float x, float y, int lados, float radio, int color, float vx, HiloFiguras hiloFiguras) {
         this.x = x;
@@ -39,11 +40,12 @@ public class PoligonoRegular {
     public void dibujar(Canvas canvas) {
         canvas.save();
         canvas.translate(x, y);
+        canvas.rotate(angulo,0,0); // aplicamos la rotación con el ángulo actual
         canvas.drawPath(path, paint);
         canvas.restore();
     }
 
-    public void mover(float lapso) {
+    public void mover(float lapso, float deltaAngulo) { // agregamos un parámetro para recibir el delta de ángulo
         x += vx * lapso / 1000000000f;
         if (x + radio >= hiloFiguras.getWidth()) {
             x -= (x + radio - hiloFiguras.getWidth()) * 2;
@@ -52,5 +54,6 @@ public class PoligonoRegular {
             x += (radio - x) * 2;
             vx = -vx;
         }
+        angulo += deltaAngulo; // actualizamos el ángulo con el delta recibido
     }
 }
