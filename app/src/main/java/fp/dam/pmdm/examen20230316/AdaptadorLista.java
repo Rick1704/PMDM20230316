@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,8 +25,12 @@ public class AdaptadorLista extends ArrayAdapter<Datos> {
         if (convertView == null) {
             convertView = LayoutInflater.from(this.getContext()).inflate(R.layout.contenidolist, parent, false);
         }
-        ((TextView) convertView.findViewById(R.id.textView)).setText(d.getNombreCustomer());
-        ((TextView) convertView.findViewById(R.id.nombre)).setText(d.getImporte());
+        TextView textView = convertView.findViewById(R.id.textView);
+        TextView nombreTextView = convertView.findViewById(R.id.nombre);
+        if (d != null) {
+            textView.setText(d.getNombreCustomer());
+            nombreTextView.setText(d.getImporte());
+        }
         return convertView;
     }
 }

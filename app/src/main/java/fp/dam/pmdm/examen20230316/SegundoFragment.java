@@ -6,8 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -58,13 +61,23 @@ public class SegundoFragment extends ListFragment implements LocationListener {
 
     public void consulta1(View v) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference name = database.getReference("ClassicModelsV2/customers/103/customerName");
-        Datos datos = new Datos();
-        List<Datos> da = Arrays.asList(new Datos(name.toString(), 0));
-        AdaptadorLista li = new AdaptadorLista(getContext(), R.layout.contenidolist, da);
-        setListAdapter(li);
-    }
+        DatabaseReference nameRef = database.getReference("ClassicModelsV2/customers/103/customerName");
+        nameRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String name = snapshot.getValue(String.class);
+                Datos datos = new Datos(name, 0);
+                List<Datos> da = Arrays.asList(datos);
+                AdaptadorLista li = new AdaptadorLista(getContext(), R.layout.contenidolist, da);
+                setListAdapter(li);
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle error
+            }
+        });
+    }
     public void consulta2(View v) {
 
     }
