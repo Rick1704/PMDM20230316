@@ -8,19 +8,16 @@ import android.view.SurfaceHolder;
 public class HiloFiguras implements Runnable {
     private static final float FPS = 60;
     private static final float NPF = 1000000000F / FPS;
-    private PoligonoRegular poligono;
     private final SurfaceHolder holder;
-    private final float ancho;
-    private final float alto;
-    private Circulo circulo;
+    private final float ancho, radio, alto, posicionY, posicionX;
     private final Paint paint;
+    private final int velocidad;
+    private PoligonoRegular poligono;
+    private Circulo circulo;
     private volatile boolean fin;
     private Thread gameLoop;
 
-    private final float PosicionY;
 
-
-    // Constructor de la clase
     public HiloFiguras(SurfaceHolder holder, int ancho, int alto) {
         this.holder = holder;
         this.ancho = ancho;
@@ -29,14 +26,16 @@ public class HiloFiguras implements Runnable {
         paint.setAntiAlias(true);
         paint.setColor(Color.WHITE);
         paint.setStrokeWidth(5);
-        PosicionY = alto / 2f;
-
+        posicionY = alto / 2f;
+        posicionX = ancho / 2f;
+        radio = 300;
+        velocidad = 173;
     }
 
     public void iniciar() {
         gameLoop = new Thread(this);
-        poligono = new PoligonoRegular(ancho / 2f, (alto / 2f) - 300, 5, 300, 173, this);
-        circulo = new Circulo(ancho / 2f, (alto / 2f) - 300, 300, 173, 0, Color.BLACK, this);
+        poligono = new PoligonoRegular(posicionX, posicionY - radio, 5, radio, velocidad, this);
+        circulo = new Circulo(posicionX, posicionY - radio, radio, velocidad, 0, Color.BLACK, this);
         gameLoop.start();
     }
 
@@ -58,10 +57,10 @@ public class HiloFiguras implements Runnable {
         }
     }
 
-    // Métodos auxiliares
     private void siguiente(float lapso) {
         circulo.mover(lapso);
-        poligono.mover(lapso, 250 * lapso / 1000000000f);
+        float velocidadGiro = 250 * lapso / 1000000000f;
+        poligono.mover(lapso, velocidadGiro);
     }
 
     private void pintar(Canvas canvas) {
@@ -70,7 +69,7 @@ public class HiloFiguras implements Runnable {
         paintLinea.setStyle(Paint.Style.STROKE);
         paintLinea.setStrokeWidth(6);
         paintLinea.setColor(Color.BLUE);
-        canvas.drawLine(0, PosicionY, ancho, PosicionY, paintLinea);
+        canvas.drawLine(0, posicionY, ancho, posicionY, paintLinea);
         circulo.paint(canvas);
         poligono.dibujar(canvas);
     }
