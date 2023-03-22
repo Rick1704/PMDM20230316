@@ -16,8 +16,9 @@ public class HiloFiguras implements Runnable {
     private Paint paint;
     private volatile boolean fin;
     private Thread gameLoop;
-    private float vHorizontal = 200; // velocidad horizontal del polígono
-    private float lineaY; // posición vertical de la línea
+
+    private float PosicionY;
+
 
     // Constructor de la clase
     public HiloFiguras(SurfaceHolder holder, int width, int height) {
@@ -28,14 +29,15 @@ public class HiloFiguras implements Runnable {
         paint.setAntiAlias(true);
         paint.setColor(Color.WHITE);
         paint.setStrokeWidth(5);
-        lineaY = height / 2f;
-        poligono = new PoligonoRegular(width / 2f,(height / 2f)-300, 5, 300, Color.BLACK, 200,this);
-        pelota = new Pelota(width / 2f,(height / 2f)-300,300,100,-23,Color.BLACK,this);
+        PosicionY = height / 2f;
+
     }
 
     // Método que inicia el hilo
     public void iniciar() {
         gameLoop = new Thread(this);
+        poligono = new PoligonoRegular(width / 2f,(height / 2f)-300, 5, 300, Color.BLACK, 200,this);
+        pelota = new Pelota(width / 2f,(height / 2f)-300,300,100,-23,Color.BLACK,this);
         gameLoop.start();
     }
 
@@ -66,13 +68,11 @@ public class HiloFiguras implements Runnable {
 
         private void pintar (Canvas canvas){
             canvas.drawColor(Color.BLUE);
-            // Dibuja la línea horizontal en el centro de la pantalla
             Paint paint2 = new Paint();
             paint2.setStyle(Paint.Style.STROKE);
             paint2.setStrokeWidth(10);
             paint2.setColor(Color.WHITE);
-            canvas.drawLine(0, lineaY, width, lineaY, paint2);
-            // Dibuja el polígono
+            canvas.drawLine(0, PosicionY, width, PosicionY, paint2);
             pelota.paint(canvas);
             poligono.dibujar(canvas);
         }
