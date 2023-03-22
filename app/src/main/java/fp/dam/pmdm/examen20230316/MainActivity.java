@@ -55,8 +55,8 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         fragmentManager = getSupportFragmentManager();
 
         // Crea las instancias de tus dos Fragments
-        fragmentOne = new FragmentOne();
-        fragmentTwo = new FragmentTwo();
+        fragmentOne = new PrimerFragment();
+        fragmentTwo = new SegundoFragment();
 
         // Muestra el primer Fragment en el contenedor
         currentFragment = fragmentOne;

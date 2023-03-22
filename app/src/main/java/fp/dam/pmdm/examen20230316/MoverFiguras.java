@@ -7,18 +7,18 @@ import android.view.SurfaceView;
 import androidx.annotation.NonNull;
 
 
-class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback{
-    private JuegoThread juegoThread;
+class MoverFiguras extends SurfaceView implements SurfaceHolder.Callback{
+    private HiloFiguras hiloFiguras;
 
-    public MySurfaceView(Context context) {
+    public MoverFiguras(Context context) {
         super(context);
         getHolder().addCallback(this);
     }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        juegoThread = new JuegoThread(holder, getWidth(), getHeight());
-        juegoThread.iniciar();
+        hiloFiguras = new HiloFiguras(holder, getWidth(), getHeight());
+        hiloFiguras.iniciar();
     }
 
     @Override

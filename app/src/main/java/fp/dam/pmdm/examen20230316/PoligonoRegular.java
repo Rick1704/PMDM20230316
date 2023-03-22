@@ -12,14 +12,14 @@ public class PoligonoRegular {
     private float y;
     private float radio;
     private float vx;
-    private JuegoThread juegoThread;
+    private HiloFiguras hiloFiguras;
     private Paint paint;
 
-    public PoligonoRegular(float x, float y, int lados, float radio, int color, float vx, JuegoThread juegoThread) {
+    public PoligonoRegular(float x, float y, int lados, float radio, int color, float vx, HiloFiguras hiloFiguras) {
         this.x = x;
         this.y = y;
         this.vx = vx;
-        this.juegoThread = juegoThread;
+        this.hiloFiguras = hiloFiguras;
         this.radio = radio;
         if (lados < 3)
             throw new IllegalArgumentException("número de lados incorrecto");
@@ -45,8 +45,8 @@ public class PoligonoRegular {
 
     public void mover(float lapso) {
         x += vx * lapso / 1000000000f;
-        if (x + radio >= juegoThread.getWidth()) {
-            x -= (x + radio - juegoThread.getWidth()) * 2;
+        if (x + radio >= hiloFiguras.getWidth()) {
+            x -= (x + radio - hiloFiguras.getWidth()) * 2;
             vx = -vx;
         } else if (x - radio <= 0) {
             x += (radio - x) * 2;

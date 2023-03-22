@@ -5,7 +5,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.SurfaceHolder;
 
-public class JuegoThread implements Runnable {
+public class HiloFiguras implements Runnable {
     private static final float FPS = 60;
     private static final float NPF = 1000000000F / FPS;
     private PoligonoRegular poligono;
@@ -20,7 +20,7 @@ public class JuegoThread implements Runnable {
     private float lineaY; // posición vertical de la línea
 
     // Constructor de la clase
-    public JuegoThread(SurfaceHolder holder, int width, int height) {
+    public HiloFiguras(SurfaceHolder holder, int width, int height) {
         this.holder = holder;
         this.width = width;
         this.height = height;

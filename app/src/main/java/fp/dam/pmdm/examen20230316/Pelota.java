@@ -9,10 +9,10 @@ public class Pelota {
     private float radio;
     private float vx;
     private float vy;
-    private JuegoThread juego;
+    private HiloFiguras juego;
     private Paint paint;
 
-    public Pelota(float x, float y, float radio, float v, float dir, int color, JuegoThread juego) {
+    public Pelota(float x, float y, float radio, float v, float dir, int color, HiloFiguras juego) {
         this.x = x;
         this.y = y;
         this.radio = radio;
