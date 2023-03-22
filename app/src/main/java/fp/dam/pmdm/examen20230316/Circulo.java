@@ -4,7 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
-public class Pelota {
+public class Circulo {
     private float x;
     private float y;
     private float radio;
@@ -13,7 +13,7 @@ public class Pelota {
     private HiloFiguras juego;
     private Paint paint;
 
-    public Pelota(float x, float y, float radio, float v, float dir, int color, HiloFiguras juego) {
+    public Circulo(float x, float y, float radio, float v, float dir, int color, HiloFiguras juego) {
         this.x = x;
         this.y = y;
         this.radio = radio;
@@ -28,8 +28,8 @@ public class Pelota {
 
     public void mover(float lapso) {
         x += vx * lapso / 1000000000f;
-        if (x + radio >= juego.getWidth()) {
-            x -= (x + radio - juego.getWidth()) * 2;
+        if (x + radio >= juego.getAncho()) {
+            x -= (x + radio - juego.getAncho()) * 2;
             vx = -vx;
         } else if (x - radio <= 0) {
             x += (radio - x) * 2;

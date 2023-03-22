@@ -14,23 +14,23 @@ public class PoligonoRegular {
     private float vx;
     private HiloFiguras hiloFiguras;
     private Paint paint;
-    private float angulo = 0; // Agregamos una variable para almacenar el ángulo actual
+    private float angulo = 0;
 
-    public PoligonoRegular(float x, float y, int lados, float radio, int color, float vx, HiloFiguras hiloFiguras) {
+    public PoligonoRegular(float x, float y, int lados, float radio, float vx, HiloFiguras hiloFiguras) {
         this.x = x;
         this.y = y;
         this.vx = vx;
         this.hiloFiguras = hiloFiguras;
         this.radio = radio;
-        if (lados < 3)
-            throw new IllegalArgumentException("número de lados incorrecto");
         float xIni = radio;
         float yIni = 0;
         float angulo = 2 * (float) Math.PI / lados;
         path.moveTo(xIni, yIni);
-        for (int i=1; i<lados; i++)
+        for (int i = 1; i < lados; i++)
             path.lineTo(radio * (float) Math.cos(i * angulo), radio * (float) Math.sin(i * angulo));
         path.lineTo(xIni, yIni);
+
+
         paint = new Paint();
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(5);
@@ -40,20 +40,20 @@ public class PoligonoRegular {
     public void dibujar(Canvas canvas) {
         canvas.save();
         canvas.translate(x, y);
-        canvas.rotate(angulo,0,0); // aplicamos la rotación con el ángulo actual
+        canvas.rotate(angulo, 0, 0);
         canvas.drawPath(path, paint);
         canvas.restore();
     }
 
-    public void mover(float lapso, float deltaAngulo) { // agregamos un parámetro para recibir el delta de ángulo
+    public void mover(float lapso, float anguloActual) {
         x += vx * lapso / 1000000000f;
-        if (x + radio >= hiloFiguras.getWidth()) {
-            x -= (x + radio - hiloFiguras.getWidth()) * 2;
+        if (x + radio >= hiloFiguras.getAncho()) {
+            x -= (x + radio - hiloFiguras.getAncho()) * 2;
             vx = -vx;
         } else if (x - radio <= 0) {
             x += (radio - x) * 2;
             vx = -vx;
         }
-        angulo += deltaAngulo; // actualizamos el ángulo con el delta recibido
+        angulo += anguloActual;
     }
 }

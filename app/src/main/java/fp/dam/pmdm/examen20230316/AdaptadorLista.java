@@ -25,12 +25,8 @@ public class AdaptadorLista extends ArrayAdapter<Datos> {
         if (convertView == null) {
             convertView = LayoutInflater.from(this.getContext()).inflate(R.layout.contenidolist, parent, false);
         }
-        TextView textView = convertView.findViewById(R.id.textView);
-        TextView nombreTextView = convertView.findViewById(R.id.nombre);
-        if (d != null) {
-            textView.setText(d.getNombreCustomer());
-            nombreTextView.setText(d.getImporte());
-        }
+        ((TextView) convertView.findViewById(R.id.textView)).setText(d.getNombreCustomer());
+        ((TextView) convertView.findViewById(R.id.nombre)).setText(d.getImporte());
         return convertView;
     }
 }

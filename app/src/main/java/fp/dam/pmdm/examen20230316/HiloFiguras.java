@@ -9,39 +9,37 @@ public class HiloFiguras implements Runnable {
     private static final float FPS = 60;
     private static final float NPF = 1000000000F / FPS;
     private PoligonoRegular poligono;
-    private SurfaceHolder holder;
-    private float width;
-    private float height;
-    private Pelota pelota;
-    private Paint paint;
+    private final SurfaceHolder holder;
+    private final float ancho;
+    private final float alto;
+    private Circulo circulo;
+    private final Paint paint;
     private volatile boolean fin;
     private Thread gameLoop;
 
-    private float PosicionY;
+    private final float PosicionY;
 
 
     // Constructor de la clase
-    public HiloFiguras(SurfaceHolder holder, int width, int height) {
+    public HiloFiguras(SurfaceHolder holder, int ancho, int alto) {
         this.holder = holder;
-        this.width = width;
-        this.height = height;
+        this.ancho = ancho;
+        this.alto = alto;
         paint = new Paint();
         paint.setAntiAlias(true);
         paint.setColor(Color.WHITE);
         paint.setStrokeWidth(5);
-        PosicionY = height / 2f;
+        PosicionY = alto / 2f;
 
     }
 
-    // Método que inicia el hilo
     public void iniciar() {
         gameLoop = new Thread(this);
-        poligono = new PoligonoRegular(width / 2f,(height / 2f)-300, 5, 300, Color.BLACK, 173,this);
-        pelota = new Pelota(width / 2f,(height / 2f)-300,300,173,0,Color.BLACK,this);
+        poligono = new PoligonoRegular(ancho / 2f, (alto / 2f) - 300, 5, 300, 173, this);
+        circulo = new Circulo(ancho / 2f, (alto / 2f) - 300, 300, 173, 0, Color.BLACK, this);
         gameLoop.start();
     }
 
-    // Método que se ejecuta en el hilo
     @Override
     public void run() {
         fin = false;
@@ -62,40 +60,36 @@ public class HiloFiguras implements Runnable {
 
     // Métodos auxiliares
     private void siguiente(float lapso) {
-        pelota.mover(lapso);
-        poligono.mover(lapso, 250* lapso / 1000000000f);
-        }
+        circulo.mover(lapso);
+        poligono.mover(lapso, 250 * lapso / 1000000000f);
+    }
 
-        private void pintar (Canvas canvas){
-            canvas.drawColor(Color.WHITE);
-            Paint paint2 = new Paint();
-            paint2.setStyle(Paint.Style.STROKE);
-            paint2.setStrokeWidth(6);
-            paint2.setColor(Color.BLUE);
-            canvas.drawLine(0, PosicionY, width, PosicionY, paint2);
-            pelota.paint(canvas);
-            poligono.dibujar(canvas);
-        }
+    private void pintar(Canvas canvas) {
+        canvas.drawColor(Color.WHITE);
+        Paint paintLinea = new Paint();
+        paintLinea.setStyle(Paint.Style.STROKE);
+        paintLinea.setStrokeWidth(6);
+        paintLinea.setColor(Color.BLUE);
+        canvas.drawLine(0, PosicionY, ancho, PosicionY, paintLinea);
+        circulo.paint(canvas);
+        poligono.dibujar(canvas);
+    }
 
-        private void pintar () {
-            Canvas canvas = null;
-            try {
-                canvas = holder.lockCanvas();
-                synchronized (holder) {
-                    pintar(canvas);
-                }
-            } catch (Exception e) {
-            } finally {
-                if (canvas != null)
-                    holder.unlockCanvasAndPost(canvas);
+    private void pintar() {
+        Canvas canvas = null;
+        try {
+            canvas = holder.lockCanvas();
+            synchronized (holder) {
+                pintar(canvas);
             }
+        } catch (Exception e) {
+        } finally {
+            if (canvas != null) holder.unlockCanvasAndPost(canvas);
         }
-
-    public float getWidth() {
-        return width;
     }
 
-    public float getHeight() {
-        return height;
+    public float getAncho() {
+        return ancho;
     }
+
 }

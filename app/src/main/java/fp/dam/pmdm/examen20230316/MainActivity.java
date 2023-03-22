@@ -21,12 +21,10 @@ import com.google.firebase.database.ValueEventListener;
 public class MainActivity extends AppCompatActivity implements View.OnTouchListener {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-    private FragmentManager fragmentManager;
-    private FrameLayout fragmentContainer;
-    private Fragment currentFragment;
-    private Fragment fragmentOne;
-    private Fragment fragmentTwo;
-    private float initialTouchY;
+    private FragmentManager manager;
+    private FrameLayout ContenedorFragment;
+    private Fragment FragmentoActual, PrimerFragmento, SegundoFragment;
+    private float posicionY;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -47,25 +45,15 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
             }
         });
-        fragmentContainer = findViewById(R.id.fragment_container);
+        ContenedorFragment = findViewById(R.id.fragment_container);
 
+        PrimerFragmento = new PrimerFragment();
+        SegundoFragment = new SegundoFragment();
+        FragmentoActual = PrimerFragmento;
+        manager = getSupportFragmentManager();
+        manager.beginTransaction().replace(R.id.fragment_container, FragmentoActual).commit();
 
-
-        // Obtiene una instancia del FragmentManager
-        fragmentManager = getSupportFragmentManager();
-
-        // Crea las instancias de tus dos Fragments
-        fragmentOne = new PrimerFragment();
-        fragmentTwo = new SegundoFragment();
-
-        // Muestra el primer Fragment en el contenedor
-        currentFragment = fragmentOne;
-        fragmentManager.beginTransaction().replace(R.id.fragment_container, currentFragment).commit();
-
-        // Configura el OnClickListener del botón
-
-
-        fragmentContainer.setOnTouchListener(this::onTouch);
+        ContenedorFragment.setOnTouchListener(this::onTouch);
     }
 
 
@@ -73,24 +61,19 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     public boolean onTouch(View view, MotionEvent motionEvent) {
         switch (motionEvent.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                // Guarda la posición vertical inicial del toque
-                initialTouchY = motionEvent.getY();
+                posicionY = motionEvent.getY();
                 break;
             case MotionEvent.ACTION_MOVE:
-                float currentTouchY = motionEvent.getY();
-                if (currentTouchY > initialTouchY) {
-                    // El usuario ha desplazado el dedo hacia abajo
-                    if (currentFragment != fragmentOne) {
-                        // Cambia al Fragment anterior
-                        currentFragment = fragmentOne;
-                        fragmentManager.beginTransaction().replace(R.id.fragment_container, currentFragment).commit();
+                float PosicionActualY = motionEvent.getY();
+                if (PosicionActualY > posicionY) {
+                    if (FragmentoActual != PrimerFragmento) {
+                        FragmentoActual = PrimerFragmento;
+                        manager.beginTransaction().replace(R.id.fragment_container, FragmentoActual).commit();
                     }
-                } else if (currentTouchY < initialTouchY) {
-                    // El usuario ha desplazado el dedo hacia arriba
-                    if (currentFragment != fragmentTwo) {
-                        // Cambia al siguiente Fragment
-                        currentFragment = fragmentTwo;
-                        fragmentManager.beginTransaction().replace(R.id.fragment_container, currentFragment).commit();
+                } else if (PosicionActualY < posicionY) {
+                    if (FragmentoActual != SegundoFragment) {
+                        FragmentoActual = SegundoFragment;
+                        manager.beginTransaction().replace(R.id.fragment_container, FragmentoActual).commit();
                     }
                 }
                 break;
