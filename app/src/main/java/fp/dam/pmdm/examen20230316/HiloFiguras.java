@@ -9,7 +9,7 @@ public class HiloFiguras implements Runnable {
     private static final float FPS = 60;
     private static final float NPF = 1000000000F / FPS;
     private final SurfaceHolder holder;
-    private final float ancho, radio, alto, posicionY, posicionX;
+    private final float ancho, radio, alto, posicionY, posicionX,velocidadAngular;
     private final Paint paint;
     private final int velocidad;
     private PoligonoRegular poligono;
@@ -28,8 +28,9 @@ public class HiloFiguras implements Runnable {
         paint.setStrokeWidth(5);
         posicionY = alto / 2f;
         posicionX = ancho / 2f;
-        radio = 300;
-        velocidad = 173;
+        radio = 3579 * ancho/57931;
+        velocidad = 17313 * ancho/57931;
+        velocidadAngular = velocidad/radio;
     }
 
     public void iniciar() {
@@ -59,8 +60,7 @@ public class HiloFiguras implements Runnable {
 
     private void siguiente(float lapso) {
         circulo.mover(lapso);
-        float velocidadGiro = 250 * lapso / 1000000000f;
-        poligono.mover(lapso, velocidadGiro);
+        poligono.mover(lapso, velocidadAngular);
     }
 
     private void pintar(Canvas canvas) {
